@@ -1,2 +1,5 @@
+from .spinbox import *
+
 def main() -> None:
-    print("Hello from textual-spinbox!")
+    exec_main()
+#    print("Hello from textual-spinbox!")
