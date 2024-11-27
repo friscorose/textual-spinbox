@@ -36,7 +36,7 @@ class SpinBox(Horizontal):
 
     def compose(self) -> ComposeResult:
         with Horizontal( id="sb_box" ):
-            yield Input("0", id="sb_field")
+            yield Input("0", type="integer", id="sb_field")
             with Vertical( id="sb_control" ):
                 yield CellButton("▲", id="sb_up" )
                 yield Label("|")
