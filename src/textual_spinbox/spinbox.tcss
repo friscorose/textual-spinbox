@@ -1,0 +1,36 @@
+Label {
+    color: red;
+}
+SpinBox {
+    height: 5;
+    width: 31;
+    background: gray;
+    Label {
+        color: $primary;
+    }
+    #sb_box {
+        position: relative;
+        offset: 1 1;
+    }
+}
+#sb_control {
+	background: $background-lighten-1;
+    height: 3;
+    width: 1;
+    position: relative;
+    offset: -3 0;
+    Button {
+        color: $primary;
+		background: $background-lighten-1;
+        min-width: 1;
+        width: 1;
+        height: 1;
+        border-top: none;
+        border-bottom: none;
+        text-align: left;
+        content-align: left middle;
+    }
+}
+#sb_field {
+    width: 15;
+}
