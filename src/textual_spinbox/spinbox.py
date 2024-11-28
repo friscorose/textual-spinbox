@@ -23,15 +23,22 @@ class CellButton( Button, can_focus=False ):
 
 class SpinBox(Horizontal):
 
+    def on_mouse_scroll_up(self):
+        self.delta_v( 1 )
+
+    def on_mouse_scroll_down(self):
+        self.delta_v( -1 )
+
     @on( Button.Pressed )
     def click_handler(self, event):
-        foo = int( self.query_one("#sb_field").value )
         if event.button.id == "sb_up":
-            foo += 1
+            self.delta_v( 1 )
         if event.button.id == "sb_dn":
-            foo -= 1
+            self.delta_v( -1 )
+
+    def delta_v( self, dv ):
+        foo = int( self.query_one("#sb_field").value ) + dv
         self.query_one("#sb_field").value = str( foo )
-        self.log( "new val:"+str( foo ) )
         self.refresh(layout=True)
 
     def compose(self) -> ComposeResult:
