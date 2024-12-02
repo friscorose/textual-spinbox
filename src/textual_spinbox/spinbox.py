@@ -7,6 +7,9 @@ from textual.events import MouseScrollDown, MouseScrollUp
 from textual.pad import HorizontalPad
 from textual.widgets import Button, Input, Label
 
+"""A unit width Button based widget that issues scroll events
+instead of clicks, as an integral part of a spinbox
+it has no focus of its own"""
 class CellButton( Button, can_focus=False ):
 
     def on_mouse_up(self, event):
@@ -44,19 +47,43 @@ class CellButton( Button, can_focus=False ):
 
 class SpinBox(Horizontal):
 
-    draggable = False
-    dragged = False
+    DEFAULT_CSS = """
+    SpinBox {
+        height: 5;
+        width: 13;
+        #sb_control {
+            background: $background-lighten-1;
+            height: 3;
+            width: 1;
+            position: relative;
+            offset: -3 0;
+            CellButton {
+                color: $primary;
+                background: $background-lighten-1;
+                min-width: 1;
+                width: 1;
+                height: 1;
+                border-top: none;
+                border-bottom: none;
+            }
+        }
+        #sb_input {
+            width: 10;
+        }
+    }
+    """
+    draging = False
+    """Any change in y position while draging will issue
+    pseudo-scroll events"""
     def on_mouse_move(self, event):
-        if self.draggable and event.delta_y < 0:
-            self.dragged = True
+        if self.draging and event.delta_y < 0:
             self.post_message( MouseScrollUp(self,
                                              event.x,
                                              event.y,
                                              event.delta_x,
                                              event.delta_y,
                                              1, 0, 0, 0) )
-        elif self.draggable and event.delta_y > 0:
-            self.dragged = True
+        elif self.draging and event.delta_y > 0:
             self.post_message( MouseScrollDown(self,
                                                event.x,
                                                event.y,
@@ -65,44 +92,40 @@ class SpinBox(Horizontal):
                                                1, 0, 0, 0) )
 
     def on_mouse_up(self, event):
-        self.draggable = False
-        if self.dragged:
-            self.dragged = False
+        self.draging = False
         self.release_mouse()
 
+    """While widget owns a mouse button down any move on the 
+    vertical will generate scrollevents to adjust the 
+    value up or down respectively."""
     def on_mouse_down(self, event):
-        self.draggable = True
+        self.draging = True
         self.capture_mouse()
 
+    """The driver event for increasing the widget value"""
     def on_mouse_scroll_up(self):
         self.delta_v( 1 )
 
+    """The driver event for decreasing the widget value"""
     def on_mouse_scroll_down(self):
         self.delta_v( -1 )
 
+    """A handler to adjust the input widget value"""
     def delta_v( self, dv ):
-        foo = int( self.query_one("#sb_field").value ) + dv
-        self.query_one("#sb_field").value = str( foo )
+        sb_input = self.query_one("#sb_input")
+        str_val = str( int( sb_input.value ) + dv )
+        sb_input.value = str_val
+        if len( str_val ) > sb_input.size.width:
+            self.query_one("#sb_overflow").update("…")
+        else:
+            self.query_one("#sb_overflow").update("¦")
         self.refresh(layout=True)
 
     def compose(self) -> ComposeResult:
         with Horizontal( id="sb_box" ):
-            yield Input("0", type="integer", id="sb_field")
+            yield Input("0", type="integer", id="sb_input")
             with Vertical( id="sb_control" ):
                 yield CellButton("▲", id="sb_up" )
-                yield Label("¦")
+                yield Label("¦", id="sb_overflow")
                 yield CellButton("▼", id="sb_dn" )
 
-class SpinboxApp(App):
-    CSS_PATH = "spinbox.tcss"
-
-    def compose(self) -> ComposeResult:
-        yield Label(" A SpinBox")
-        yield SpinBox()
-
-def exec_main():
-    app = SpinboxApp()
-    app.run() 
-
-if __name__ == "__main__":
-    exec_main()

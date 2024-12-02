@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [project.scripts]
-spinbox_demo = "textual_spinbox:main"
+spinbox_demo = "textual_spinbox.demo:exec_main"
 
 [build-system]
 requires = ["hatchling"]
