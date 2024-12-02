@@ -49,8 +49,7 @@ class SpinBox(Horizontal):
 
     DEFAULT_CSS = """
     SpinBox {
-        height: 5;
-        width: 13;
+        height: 3;
         #sb_control {
             background: $background-lighten-1;
             height: 3;
@@ -68,7 +67,7 @@ class SpinBox(Horizontal):
             }
         }
         #sb_input {
-            width: 10;
+            width: 1fr;
         }
     }
     """
