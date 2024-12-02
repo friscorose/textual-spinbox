@@ -1,5 +1,15 @@
 # A Textual Spinbox widget
 
+## Demo a Textual spinbox 
+
+Simply run from the repo with
+
+`uvx --from git+https://github.com/friscorose/textual-spinbox spinbox_demo`
+
+now you can scroll wheel up or down, drag up or down and click the up or down arrows to change the value in the spinbox. A simple ctrl+c to quit.
+
+## Use uv to build an app
+
 Build a silly app with a custom Textual spinbox widget using uv.
 
 `uv init sillyapp`
