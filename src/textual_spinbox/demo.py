@@ -10,7 +10,6 @@ class SpinboxApp(App):
 
     def compose(self) -> ComposeResult:
         yield SpinBox()
-        yield SpinBox()
 
 def exec_main():
     app = SpinboxApp()
