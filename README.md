@@ -2,7 +2,7 @@
 
 ## Demo a Textual spinbox 
 
-Simply run from the repo with
+Simply run from the repo with [uv](https://docs.astral.sh/uv/)
 
 `uvx --from git+https://github.com/friscorose/textual-spinbox spinbox_demo`
 

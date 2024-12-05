@@ -5,6 +5,7 @@ from textual.app import App, ComposeResult, RenderResult
 from textual.containers import Horizontal, Vertical
 from textual.events import MouseScrollDown, MouseScrollUp
 from textual.pad import HorizontalPad
+from textual.widget import Widget
 from textual.widgets import Button, Input, Label
 
 """A unit width Button based widget that issues scroll events
@@ -45,11 +46,12 @@ class CellButton( Button, can_focus=False ):
             )
 
 
-class SpinBox(Horizontal):
+class SpinBox(Widget):
 
     DEFAULT_CSS = """
     SpinBox {
         height: 3;
+        min-height: 3;
         #sb_control {
             background: $background-lighten-1;
             height: 3;
@@ -71,6 +73,7 @@ class SpinBox(Horizontal):
         }
     }
     """
+        
     draging = False
     """Any change in y position while draging will issue
     pseudo-scroll events"""
@@ -102,11 +105,13 @@ class SpinBox(Horizontal):
         self.capture_mouse()
 
     """The driver event for increasing the widget value"""
-    def on_mouse_scroll_up(self):
+    def on_mouse_scroll_up(self, event):
+        event.stop()
         self.delta_v( 1 )
 
     """The driver event for decreasing the widget value"""
-    def on_mouse_scroll_down(self):
+    def on_mouse_scroll_down(self, event):
+        event.stop()
         self.delta_v( -1 )
 
     """A handler to adjust the input widget value"""
