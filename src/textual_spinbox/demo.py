@@ -4,7 +4,7 @@ from textual_spinbox import SpinBox
 class SpinboxApp(App):
     DEFAULT_CSS = """
     SpinBox {
-        width: 13;
+        width: 10;
     }
     """
 

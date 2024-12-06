@@ -69,7 +69,7 @@ class SpinBox(Widget):
             }
         }
         #sb_input {
-            width: 1fr;
+            width: 100%;
         }
     }
     """
