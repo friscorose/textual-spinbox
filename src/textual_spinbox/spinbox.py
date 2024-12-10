@@ -96,10 +96,12 @@ class SpinBox(Widget):
         super().__init__(name=name, id=id, classes=classes, disabled=disabled)
         if iter_val is not None:
             self.iter_ring = deque( iter_val )
-            self._iter_val = self.iter_ring[0]
+            self.value = str( self.iter_ring[0] )
+            self._sb_type = "text"
         else:
             self.iter_ring = iter_val
-            self._iter_val = 0
+            self.value = str( 0 )
+            self._sb_type = "integer"
 
         
     draging = False
@@ -147,11 +149,12 @@ class SpinBox(Widget):
         sb_input = self.query_one("#sb_input")
         if self.iter_ring is not None:
             self.iter_ring.rotate( -dv )
-            str_val = str( self.iter_ring[0] )
+            self.value = str( self.iter_ring[0] )
         else:
-            str_val = str( int( sb_input.value ) + dv )
-        sb_input.value = str_val
-        if len( str_val ) > sb_input.size.width:
+            self.value = str( int( sb_input.value ) + dv )
+        sb_input.value = self.value
+        sb_input.action_home()
+        if len( self.value ) > sb_input.size.width:
             self.query_one("#sb_overflow").update("…")
         else:
             self.query_one("#sb_overflow").update("¦")
@@ -159,7 +162,7 @@ class SpinBox(Widget):
 
     def compose(self) -> ComposeResult:
         with Horizontal( id="sb_box" ):
-            yield Input(str( self._iter_val ), id="sb_input")
+            yield Input( self.value, type=self._sb_type, id="sb_input")
             with Vertical( id="sb_control" ):
                 yield CellButton("▲", id="sb_up" )
                 yield Label("¦", id="sb_overflow")
