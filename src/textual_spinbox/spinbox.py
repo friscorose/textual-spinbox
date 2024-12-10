@@ -1,3 +1,4 @@
+from collections import deque
 from rich.text import Text, TextType
 
 from textual import events, on
@@ -73,6 +74,33 @@ class SpinBox(Widget):
         }
     }
     """
+
+    def __init__(
+            self,
+            iter_val = None,
+            *,
+            name: str | None = None,
+            id: str | None = None,
+            classes: str | None = None,
+            disabled: bool = False,
+        ) -> None:
+        """Initialize a SpinBox.
+
+        Args:
+            iter_val: an iterator instance.
+            name: The name of the widget.
+            id: The ID of the widget in the DOM.
+            classes: The CSS classes for the widget.
+            disabled: Whether the widget is disabled or not.
+        """
+        super().__init__(name=name, id=id, classes=classes, disabled=disabled)
+        if iter_val is not None:
+            self.iter_ring = deque( iter_val )
+            self._iter_val = self.iter_ring[0]
+        else:
+            self.iter_ring = iter_val
+            self._iter_val = 0
+
         
     draging = False
     """Any change in y position while draging will issue
@@ -117,7 +145,11 @@ class SpinBox(Widget):
     """A handler to adjust the input widget value"""
     def delta_v( self, dv ):
         sb_input = self.query_one("#sb_input")
-        str_val = str( int( sb_input.value ) + dv )
+        if self.iter_ring is not None:
+            self.iter_ring.rotate( -dv )
+            str_val = str( self.iter_ring[0] )
+        else:
+            str_val = str( int( sb_input.value ) + dv )
         sb_input.value = str_val
         if len( str_val ) > sb_input.size.width:
             self.query_one("#sb_overflow").update("…")
@@ -127,7 +159,7 @@ class SpinBox(Widget):
 
     def compose(self) -> ComposeResult:
         with Horizontal( id="sb_box" ):
-            yield Input("0", type="integer", id="sb_input")
+            yield Input(str( self._iter_val ), id="sb_input")
             with Vertical( id="sb_control" ):
                 yield CellButton("▲", id="sb_up" )
                 yield Label("¦", id="sb_overflow")

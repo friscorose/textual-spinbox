@@ -8,8 +8,11 @@ class SpinboxApp(App):
     }
     """
 
+    months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     def compose(self) -> ComposeResult:
-        yield SpinBox()
+        yield SpinBox( id="pennies" )
+        yield SpinBox( range(1,32), id="date" )
+        yield SpinBox( self.months, id="month" )
 
 def exec_main():
     app = SpinboxApp()
