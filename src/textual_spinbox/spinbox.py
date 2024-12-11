@@ -94,6 +94,7 @@ class SpinBox(Widget):
             disabled: Whether the widget is disabled or not.
         """
         super().__init__(name=name, id=id, classes=classes, disabled=disabled)
+        self.tooltip = "Scroll, Drag or Key Up/Down."
         if iter_val is not None:
             self.iter_ring = deque( iter_val )
             self.value = str( self.iter_ring[0] )
@@ -103,7 +104,14 @@ class SpinBox(Widget):
             self.value = str( 0 )
             self._sb_type = "integer"
 
-        
+    def on_key(self, event: events.Key)-> None:
+        if event.key == 'up':
+            event.stop()
+            self.delta_v( 1 )
+        elif event.key == 'down':
+            event.stop()
+            self.delta_v( -1 )
+
     draging = False
     """Any change in y position while draging will issue
     pseudo-scroll events"""

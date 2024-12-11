@@ -12,15 +12,17 @@ class Statement( Label ):
 class SpinboxApp(App):
     DEFAULT_CSS = """
     SpinBox {
-        width: 10;
+        width: 13;
     }
     """
 
     months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    things = ['albatross', 'boomerang', 'cat', 'dodo', 'ewe', 'flotilla', 'geriatric', 'hopscotch', 'ice flow', 'jalopy', 'Kobayashi Maru', 'lava', 'mycelium', 'narwhal', 'oil tanker', 'pod', 'quaaltagh', 'rat', 'snail', 'tiptoe', 'ukulele', 'verb', 'wheeriemigo', 'xanthippe', 'yill', 'zymurgy']
     def compose(self) -> ComposeResult:
         yield SpinBox( id="pennies" )
         yield SpinBox( range(1,32), id="date" )
         yield SpinBox( self.months, id="month" )
+        yield SpinBox( self.things, id="thing" )
         yield Button( "Make", variant="primary", id="make" )
         yield Statement()
 
@@ -29,9 +31,10 @@ class SpinboxApp(App):
             pennies = self.query_one("#pennies").value
             date = self.query_one("#date").value
             month = self.query_one("#month").value
+            thing = self.query_one("#thing").value
             self.query_one("Statement").silly = f"""\
 ...my bank statement change by {pennies} cents on {month}/{date} \n\
-Reason: compulsory snail race gambling."""
+Reason: compulsory {thing} race gambling."""
 
 def exec_main():
     app = SpinboxApp()
