@@ -1,12 +1,12 @@
 [project]
 name = "textual-spinbox"
-version = "0.5.0"
+version = "0.5.1"
 description = "A simple spinbox widget for Textual"
 readme = "README.md"
 authors = [
     { name = "Frisco Rose", email = "friscorose@gmail.com" }
 ]
-requires-python = ">=3.12"
+requires-python = ">=3.10"
 dependencies = [
     "textual>=0.87.1",
 ]
