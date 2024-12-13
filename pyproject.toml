@@ -17,3 +17,6 @@ spinbox_demo = "textual_spinbox.demo:exec_main"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.pylint."messages control"]
+allowed-redefined-builtins = [ 'id' ]

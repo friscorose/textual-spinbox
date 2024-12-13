@@ -1,20 +1,22 @@
+"""Widget definitions for SpinBox and a special 1 cell button child"""
 from collections import deque
-from rich.text import Text, TextType
+from rich.text import Text
 
-from textual import events, on
-from textual.app import App, ComposeResult, RenderResult
+from textual import events
+from textual.app import ComposeResult, RenderResult
 from textual.containers import Horizontal, Vertical
 from textual.events import MouseScrollDown, MouseScrollUp
 from textual.pad import HorizontalPad
 from textual.widget import Widget
 from textual.widgets import Button, Input, Label
 
-"""A unit width Button based widget that issues scroll events
-instead of clicks, as an integral part of a spinbox
-it has no focus of its own"""
 class CellButton( Button, can_focus=False ):
+    """A unit width Button based widget that issues scroll events
+    instead of clicks, as an integral part of a spinbox
+    it has no focus of its own"""
 
     def on_mouse_up(self, event):
+        """Convert button up to suitable scrollevent"""
         event.stop()
         if self.id == "sb_up":
             self.post_message( MouseScrollUp(self,
@@ -32,23 +34,25 @@ class CellButton( Button, can_focus=False ):
                                              1, 0, 0, 0) )
 
     def on_mouse_down(self, event):
+        """Handle button down as trigger to capture"""
         event.stop()
 
     def render(self) -> RenderResult:
-            assert isinstance(self.label, Text)
-            label = self.label.copy()
-            label.stylize_before(self.rich_style)
-            return HorizontalPad(
+        """Monkey patch the render for single cell button"""
+        assert isinstance(self.label, Text)
+        label = self.label.copy()
+        label.stylize_before(self.rich_style)
+        return HorizontalPad(
                 label,
                 0,
                 0,
                 self.rich_style,
                 self._get_justify_method() or "center",
-            )
+                )
 
 
 class SpinBox(Widget):
-
+    """Bundle up widgets and events to create a spinbox widget"""
     DEFAULT_CSS = """
     SpinBox {
         height: 3;
@@ -75,7 +79,7 @@ class SpinBox(Widget):
     }
     """
 
-    def __init__(
+    def __init__( # pylint: disable=R0913
             self,
             iter_val = None,
             *,
@@ -105,6 +109,7 @@ class SpinBox(Widget):
             self._sb_type = "integer"
 
     def on_key(self, event: events.Key)-> None:
+        """Event handler for keyboard input"""
         if event.key == 'up':
             event.stop()
             self.delta_v( 1 )
@@ -113,47 +118,36 @@ class SpinBox(Widget):
             self.delta_v( -1 )
 
     draging = False
-    """Any change in y position while draging will issue
-    pseudo-scroll events"""
     def on_mouse_move(self, event):
+        """A change in y position will inc/dec value"""
         if self.draging and event.delta_y < 0:
-            self.post_message( MouseScrollUp(self,
-                                             event.x,
-                                             event.y,
-                                             event.delta_x,
-                                             event.delta_y,
-                                             1, 0, 0, 0) )
+            self.delta_v( 1 )
         elif self.draging and event.delta_y > 0:
-            self.post_message( MouseScrollDown(self,
-                                               event.x,
-                                               event.y,
-                                               event.delta_x,
-                                               event.delta_y,
-                                               1, 0, 0, 0) )
+            self.delta_v( -1 )
 
-    def on_mouse_up(self, event):
+    def on_mouse_up(self):
+        """clean up mouse handling"""
         self.draging = False
         self.release_mouse()
 
-    """While widget owns a mouse button down any move on the 
-    vertical will generate scrollevents to adjust the 
-    value up or down respectively."""
-    def on_mouse_down(self, event):
+    def on_mouse_down(self):
+        """While widget owns a mouse button down any move on the
+        vertical will adjust the value up or down respectively."""
         self.draging = True
         self.capture_mouse()
 
-    """The driver event for increasing the widget value"""
     def on_mouse_scroll_up(self, event):
+        """The driver event for increasing the widget value from child"""
         event.stop()
         self.delta_v( 1 )
 
-    """The driver event for decreasing the widget value"""
     def on_mouse_scroll_down(self, event):
+        """The driver event for decreasing the widget value from child"""
         event.stop()
         self.delta_v( -1 )
 
-    """A handler to adjust the input widget value"""
     def delta_v( self, dv ):
+        """A handler to adjust the input widget value"""
         sb_input = self.query_one("#sb_input")
         if self.iter_ring is not None:
             self.iter_ring.rotate( -dv )
@@ -169,10 +163,10 @@ class SpinBox(Widget):
         self.refresh(layout=True)
 
     def compose(self) -> ComposeResult:
+        """Widget structure generator"""
         with Horizontal( id="sb_box" ):
             yield Input( self.value, type=self._sb_type, id="sb_input")
             with Vertical( id="sb_control" ):
                 yield CellButton("▲", id="sb_up" )
                 yield Label("¦", id="sb_overflow")
                 yield CellButton("▼", id="sb_dn" )
-

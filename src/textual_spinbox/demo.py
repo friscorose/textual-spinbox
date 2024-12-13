@@ -1,15 +1,18 @@
+"""A silly demo of the SpinBox widget"""
 from textual.app import App, ComposeResult
 from textual.reactive import reactive
 from textual.widgets import Button, Label
 from textual_spinbox import SpinBox
 
 class Statement( Label ):
+    """Make label reactive"""
     silly = reactive( "...a silly statement.", recompose=True )
 
     def compose(self) -> ComposeResult:
         yield Label( self.silly )
 
 class SpinboxApp(App):
+    """The main demo app"""
     DEFAULT_CSS = """
     SpinBox {
         width: 13;
@@ -27,6 +30,7 @@ class SpinboxApp(App):
         yield Statement()
 
     def on_button_pressed(self, event: Button.Pressed):
+        """What to do when the button is clicked"""
         if event.button.id == "make":
             pennies = self.query_one("#pennies").value
             date = self.query_one("#date").value
@@ -37,9 +41,9 @@ class SpinboxApp(App):
 Reason: compulsory {thing} race gambling."""
 
 def exec_main():
+    """Allow call by script handler in pyproject"""
     app = SpinboxApp()
-    app.run() 
+    app.run()
 
 if __name__ == "__main__":
     exec_main()
-
