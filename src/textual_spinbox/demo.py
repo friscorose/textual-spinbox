@@ -1,4 +1,5 @@
 """A silly demo of the SpinBox widget"""
+from calendar import month_name
 from textual.app import App, ComposeResult
 from textual.reactive import reactive
 from textual.widgets import Button, Label
@@ -19,7 +20,7 @@ class SpinboxApp(App):
     }
     """
 
-    months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    months = list(month_name)[1:]
     things = ['albatross', 'boomerang', 'cat', 'dodo', 'ewe', 'flotilla', 'geriatric', 'hopscotch', 'ice flow', 'jalopy', 'Kobayashi Maru', 'lava', 'mycelium', 'narwhal', 'oil tanker', 'pod', 'quaaltagh', 'rat', 'snail', 'tiptoe', 'ukulele', 'verb', 'wheeriemigo', 'xanthippe', 'yill', 'zymurgy']
     def compose(self) -> ComposeResult:
         yield SpinBox( id="pennies" )
