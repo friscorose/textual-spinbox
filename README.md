@@ -6,7 +6,7 @@ Simply run from the repo with [uv](https://docs.astral.sh/uv/)
 
 `uvx --from git+https://github.com/friscorose/textual-spinbox spinbox_demo`
 
-now you can scroll wheel up or down, drag up or down and click the up or down arrows to change the value in the spinbox. A simple ctrl+c to quit.
+now you can scroll wheel up or down, drag up or down and click the up or down arrows to change the value in the spinbox. A simple ctrl+q to quit.
 
 NB: This widget is also available from PyPI if you want to use pip/pipx to manage your python packages.
 
