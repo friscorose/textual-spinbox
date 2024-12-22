@@ -1,6 +1,6 @@
 [project]
 name = "textual-spinbox"
-version = "0.7.0"
+version = "0.8.0"
 description = "A simple spinbox widget for Textual"
 readme = "README.md"
 authors = [

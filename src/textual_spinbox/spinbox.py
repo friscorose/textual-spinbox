@@ -82,6 +82,7 @@ class SpinBox(Widget):
     def __init__( # pylint: disable=R0913
             self,
             iter_val = None,
+            init_val = None,
             *,
             name: str | None = None,
             id: str | None = None,
@@ -101,6 +102,8 @@ class SpinBox(Widget):
         self.tooltip = "Scroll, Drag or Key Up/Down."
         if iter_val is not None:
             self.iter_ring = deque( iter_val )
+            if init_val is not None:
+                self.iter_ring.rotate( -1*self.iter_ring.index(init_val) )
             self.value = str( self.iter_ring[0] )
             self._sb_type = "text"
         else:

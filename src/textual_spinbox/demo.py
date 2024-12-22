@@ -24,9 +24,9 @@ class SpinboxApp(App):
     things = ['albatross', 'boomerang', 'cat', 'dodo', 'ewe', 'flotilla', 'geriatric', 'hopscotch', 'ice flow', 'jalopy', 'Kobayashi Maru', 'lava', 'mycelium', 'narwhal', 'oil tanker', 'pod', 'quaaltagh', 'rat', 'snail', 'tiptoe', 'ukulele', 'verb', 'wheeriemigo', 'xanthippe', 'yill', 'zymurgy']
     def compose(self) -> ComposeResult:
         yield SpinBox( id="pennies" )
-        yield SpinBox( range(1,32), id="date" )
+        yield SpinBox( range(1,32), 21, id="date" )
         yield SpinBox( self.months, id="month" )
-        yield SpinBox( self.things, id="thing" )
+        yield SpinBox( self.things, "snail", id="thing" )
         yield Button( "Make", variant="primary", id="make" )
         yield Statement()
 
