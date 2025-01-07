@@ -65,11 +65,11 @@ wheels = [
 
 [[package]]
 name = "pygments"
-version = "2.18.0"
+version = "2.19.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/8e/62/8336eff65bcbc8e4cb5d05b55faf041285951b6e80f33e2bff2024788f31/pygments-2.18.0.tar.gz", hash = "sha256:786ff802f32e91311bff3889f6e9a86e81505fe99f2735bb6d60ae0c5004f199", size = 4891905 }
+sdist = { url = "https://files.pythonhosted.org/packages/7c/2d/c3338d48ea6cc0feb8446d8e6937e1408088a72a39937982cc6111d17f84/pygments-2.19.1.tar.gz", hash = "sha256:61c16d2a8576dc0649d9f39e089b5f02bcd27fba10d8fb4dcc28173f7a45151f", size = 4968581 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f7/3f/01c8b82017c199075f8f788d0d906b9ffbbc5a47dc9918a945e13d5a2bda/pygments-2.18.0-py3-none-any.whl", hash = "sha256:b8e6aca0523f3ab76fee51799c488e38782ac06eafcf95e7ba832985c8e7b13a", size = 1205513 },
+    { url = "https://files.pythonhosted.org/packages/8a/0b/9fcc47d19c48b59121088dd6da2488a49d5f72dacf8262e2790a1d2c7d15/pygments-2.19.1-py3-none-any.whl", hash = "sha256:9ea1544ad55cecf4b8242fab6dd35a93bbce657034b0611ee383099054ab6d8c", size = 1225293 },
 ]
 
 [[package]]
@@ -88,7 +88,7 @@ wheels = [
 
 [[package]]
 name = "textual"
-version = "0.87.1"
+version = "1.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "markdown-it-py", extra = ["linkify", "plugins"] },
@@ -96,21 +96,21 @@ dependencies = [
     { name = "rich" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/61/6a/e643a0d32dc964f831172ff84d4d1b0e3c6675954e74f81c201713c58d69/textual-0.87.1.tar.gz", hash = "sha256:daf4e248ba3d890831ff2617099535eb835863a2e3609c8ce00af0f6d55ed123", size = 1515065 }
+sdist = { url = "https://files.pythonhosted.org/packages/1f/b6/59b1de04bb4dca0f21ed7ba0b19309ed7f3f5de4396edf20cc2855e53085/textual-1.0.0.tar.gz", hash = "sha256:bec9fe63547c1c552569d1b75d309038b7d456c03f86dfa3706ddb099b151399", size = 1532733 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b5/da/65056aefc671ddf858ea3ae8da8cd78fe547b3adfa90554bdd178c26f376/textual-0.87.1-py3-none-any.whl", hash = "sha256:026d1368cd10610a72a9d3de7a56692a17e7e8dffa0468147eb8e186ba0ff0c0", size = 654686 },
+    { url = "https://files.pythonhosted.org/packages/ac/bb/5fb6656c625019cd653d5215237d7cd6e0b12e7eae4195c3d1c91b2136fc/textual-1.0.0-py3-none-any.whl", hash = "sha256:2d4a701781c05104925e463ae370c630567c70c2880e92ab838052e3e23c986f", size = 660456 },
 ]
 
 [[package]]
 name = "textual-spinbox"
-version = "0.7.0"
+version = "0.8.0"
 source = { editable = "." }
 dependencies = [
     { name = "textual" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "textual", specifier = ">=0.87.1" }]
+requires-dist = [{ name = "textual", specifier = ">=1.0.0" }]
 
 [[package]]
 name = "typing-extensions"
