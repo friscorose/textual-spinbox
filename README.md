@@ -8,7 +8,10 @@ Simply run from the repo with [uv](https://docs.astral.sh/uv/)
 
 now you can scroll wheel up or down, drag up or down and click the up or down arrows to change the value in the spinbox. A simple ctrl+c to quit.
 
-NB: This widget is also available from PyPI if you want to use pip/pipx to manage your python packages.
+NB: This widget is also available from PyPI if you want to use pip/pipx to manage your python packages; ie.
+
+`uv venv`
+`uv pip install textual-spinbox`
 
 ## Use uv to build an app
 
